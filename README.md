@@ -25,10 +25,12 @@ cd openai-realtime-api-nextjs
 Create a `.env` file in the root directory:
 ```env
 AZURE_OPENAI_API_KEY=your-openai-api-key
+AZURE_API_VERSION="2024-10-01-preview"
+AZURE_OPENAI_ENDPOINT=your-azure-openai-endpoint
+AZURE_DEPLOYMENT_NAME=your-azure-deployment-name
 ```
 
 ### 3. Install Dependencies
-If using **Node.js**:
 ```bash
 npm install
 ```
