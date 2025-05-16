@@ -18,7 +18,7 @@ This is a WebRTC-based Voice AI stream application using `OpenAI`'s `Realtime AP
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/sailorjs0804/realtime-api-webrtc.git
-cd openai-realtime-api-nextjs
+cd realtime-api-webrtc
 ```
 
 ### 2. Environment Setup
