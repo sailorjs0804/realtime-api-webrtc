@@ -1,4 +1,4 @@
-# OpenAI WebRTC Shadcn Next15 Starter
+# OpenAI Realtime with WebRTC
 This is a WebRTC-based Voice AI stream application using `OpenAI`'s `Realtime API` and `WebRTC`.
 
 ## Features
