@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST() {
     try {
-        if (!process.env.OPENAI_API_KEY){
-            throw new Error(`OPENAI_API_KEY is not set`);
+        if (!process.env.AZURE_OPENAI_API_KEY){
+            throw new Error(`AZURE_OPENAI_API_KEY is not set`);
 
         }
         const response = await fetch(`${process.env.AZURE_OPENAI_ENDPOINT}/openai/realtimeapi/sessions?api-version=2025-04-01-preview`, {
