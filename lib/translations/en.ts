@@ -14,7 +14,7 @@ export const en = {
         // github: "Star on GitHub",
         language: "Language",
         light: "Light",
-        logo: "OpenAI Realtime Starter",
+        logo: "天汇AI",
         system: "System",
         theme: "Toggle theme",
         // twitter: "Follow on"
@@ -22,7 +22,7 @@ export const en = {
     hero: {
         // badge: "Next.js + shadcn/ui",
         subtitle: "Demo by clicking the button below and try available tools",
-        title: "OpenAI Realtime API (WebRTC)"
+        title: "天汇AI语音助手"
     },
     messageControls: {
         content: "Content",

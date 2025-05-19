@@ -9,12 +9,12 @@ export const zh = {
         about: "这是一个旨在演示如何在现代 Next 15 项目中使用 OpenAI 实时 API 和 WebRTC 的项目。它已安装了 shadcn/ui 组件并实现了 WebRTC 音频会话钩子。克隆项目并定义您自己的工具。",
         banner: "🎉 快来看看全新的 Next.js OpenAI 实时块用户界面库！",
         bannerLink: "了解更多 →",
-        beta: "测试版",
+        beta: "内部测试版",
         dark: "深色",
         github: "在 GitHub 上标星",
         language: "语言",
         light: "浅色",
-        logo: "OpenAI 实时启动器",
+        logo: "天汇AI",
         system: "系统",
         theme: "切换主题",
         twitter: "在推特上关注"
@@ -22,7 +22,7 @@ export const zh = {
     hero: {
         // badge: "Next.js + shadcn/ui",
         subtitle: "点击下方按钮进行演示并尝试可用工具",
-        title: "OpenAI 实时 API (WebRTC)"
+        title: "天汇AI语音助手",
     },
     messageControls: {
         content: "内容",
