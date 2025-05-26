@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     const apiResponse = await fetch(EXTERNAL_API_URL, {
       method: 'POST',
       body: apiFormData,
-    }).catch(err => {
+    }).catch(() => {
       throw new Error('Failed to connect to the knowledge base service');
     });
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
           const textError = await apiResponse.text();
           console.error('Error text:', textError);
           if (textError) errorMessage = textError;
-        } catch (_) {
+        } catch {
           // Ignore if we can't get text either
           console.error('Failed to get error text');
         }

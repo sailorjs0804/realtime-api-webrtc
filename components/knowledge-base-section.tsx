@@ -15,14 +15,11 @@ interface UploadedFile {
 
 export function KnowledgeBaseSection() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
 
   const handleUpload = async (file: File) => {
-    setIsUploading(true);
-
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('files', file);
 
       const response = await fetch('/api/v1/upload', {
         method: 'POST',
@@ -55,8 +52,6 @@ export function KnowledgeBaseSection() {
       console.error('Upload error:', error);
       toast.error(error instanceof Error ? error.message : '上传失败');
       throw error; // Re-throw to be handled by the KnowledgeUpload component
-    } finally {
-      setIsUploading(false);
     }
   };
 
