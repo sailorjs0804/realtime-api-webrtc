@@ -11,6 +11,7 @@ import { TokenUsageDisplay } from "@/components/token-usage"
 import { MessageControls } from "@/components/message-controls"
 import { ToolsEducation } from "@/components/tools-education"
 import { TextInput } from "@/components/text-input"
+import { KnowledgeBaseSection } from "@/components/knowledge-base-section"
 import { motion } from "framer-motion"
 import { useToolsFunctions } from "@/hooks/use-tools"
 
@@ -92,6 +93,7 @@ const App: React.FC = () => {
 
         {status && <StatusDisplay status={status} />}
         <div className="w-full flex flex-col items-center gap-4">
+          <KnowledgeBaseSection />
           <ToolsEducation />
         </div>
       </motion.div>

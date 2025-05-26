@@ -20,29 +20,9 @@ export function ToolsEducation() {
 
   const AVAILABLE_TOOLS = [
     {
-      name: t('tools.availableTools.copyFn.name'),
-      description: t('tools.availableTools.copyFn.description'),
-    },
-    {
-      name: t('tools.availableTools.getTime.name'),
-      description: t('tools.availableTools.getTime.description'),
-    },
-    {
-      name: t('tools.availableTools.themeSwitcher.name'),
-      description: t('tools.availableTools.themeSwitcher.description'),
-    },
-    {
-      name: t('tools.availableTools.partyMode.name'),
-      description: t('tools.availableTools.partyMode.description'),
-    },
-    {
-      name: t('tools.availableTools.launchWebsite.name'),
-      description: t('tools.availableTools.launchWebsite.description'),
-    },
-    {
-      name: t('tools.availableTools.scrapeWebsite.name'),
-      description: t('tools.availableTools.scrapeWebsite.description'),
-    },
+      name: t('tools.availableTools.searchKnowledgeBase.name'),
+      description: t('tools.availableTools.searchKnowledgeBase.description'),
+    }
   ] as const;
 
   return (
@@ -68,4 +48,4 @@ export function ToolsEducation() {
       </Accordion>
     </div>
   )
-} 
+}

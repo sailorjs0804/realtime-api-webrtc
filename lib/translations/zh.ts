@@ -73,6 +73,10 @@ export const zh = {
             scrapeWebsite: {
                 name: "网页内容提取器",
                 description: '说"提取[网站URL]的内容"来获取网页内容。'
+            },
+            searchKnowledgeBase: {
+                name: "知识库搜索",
+                description: '询问关于已上传文档中问题，会从知识库中搜索信息。'
             }
         },
         clipboard: {

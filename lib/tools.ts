@@ -13,54 +13,64 @@ interface Tool {
 }
 
 const toolDefinitions = {
-    getCurrentTime: {
-        description: 'Gets the current time in the user\'s timezone',
-        parameters: {}
-    },
-    changeBackgroundColor: {
-        description: 'Changes the background color of the page', 
+    // 查询知识库
+    searchKnowledgeBase: {
+        description: 'When user ask questions about the knowledge base, you can use this tool to search the knowledge base',
         parameters: {
-        color: { 
-            type: 'string',
-            description: 'Color value (hex, rgb, or color name)'
-        }
-        }
-    },
-    partyMode: {
-        description: 'Triggers a confetti animation on the page',
-        parameters: {}
-    },
-    launchWebsite: {
-        description: 'Launches a website in the user\'s browser',
-        parameters: {
-        url: {
-            type: 'string',
-            description: 'The URL to launch'
-        }
-        }
-    },
-    copyToClipboard: {
-        description: 'Copies text to the user\'s clipboard',
-        parameters: {
-        text: {
-            type: 'string',
-            description: 'The text to copy'
-        }
-        }
-    },
-    takeScreenshot: {
-        description: 'Takes a screenshot of the current page',
-        parameters: {}
-    },
-    scrapeWebsite: {
-        description: 'Scrapes a URL and returns content in markdown and HTML formats',
-        parameters: {
-            url: {
+            query: {
                 type: 'string',
-                description: 'The URL to scrape'
+                description: 'The query to search the knowledge base'
             }
         }
-    }
+    },
+    // getCurrentTime: {
+    //     description: 'Gets the current time in the user\'s timezone',
+    //     parameters: {}
+    // },
+    // changeBackgroundColor: {
+    //     description: 'Changes the background color of the page',
+    //     parameters: {
+    //     color: {
+    //         type: 'string',
+    //         description: 'Color value (hex, rgb, or color name)'
+    //     }
+    //     }
+    // },
+    // partyMode: {
+    //     description: 'Triggers a confetti animation on the page',
+    //     parameters: {}
+    // },
+    // launchWebsite: {
+    //     description: 'Launches a website in the user\'s browser',
+    //     parameters: {
+    //     url: {
+    //         type: 'string',
+    //         description: 'The URL to launch'
+    //     }
+    //     }
+    // },
+    // copyToClipboard: {
+    //     description: 'Copies text to the user\'s clipboard',
+    //     parameters: {
+    //     text: {
+    //         type: 'string',
+    //         description: 'The text to copy'
+    //     }
+    //     }
+    // },
+    // takeScreenshot: {
+    //     description: 'Takes a screenshot of the current page',
+    //     parameters: {}
+    // },
+    // scrapeWebsite: {
+    //     description: 'Scrapes a URL and returns content in markdown and HTML formats',
+    //     parameters: {
+    //         url: {
+    //             type: 'string',
+    //             description: 'The URL to scrape'
+    //         }
+    //     }
+    // }
 } as const;
 
 const tools: Tool[] = Object.entries(toolDefinitions).map(([name, config]) => ({

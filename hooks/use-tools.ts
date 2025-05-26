@@ -9,6 +9,19 @@ import FirecrawlApp, { ScrapeResponse } from '@mendable/firecrawl-js';
 export const useToolsFunctions = () => {
   const { t } = useTranslations();
 
+  const searchKnowledgeBase = async ({ query }: { query: string }) => {
+    // 从 localStorage 获取 kb_id，如果没有则使用默认值
+    const kb_id = localStorage.getItem('kb_id') || '';
+
+    // 请求http接口获取相应结果 请求体的参数 query kb_id
+    const response = await fetch(`https://tianhuiai.com.cn/api/v1/query`, {
+      method: 'POST',
+      body: JSON.stringify({ query: query, kb_id: kb_id }),
+    });
+    const data = await response.json();
+    return data;
+  }
+
   const timeFunction = () => {
     const now = new Date()
     return {
@@ -32,15 +45,15 @@ export const useToolsFunctions = () => {
         description: t('tools.switchTheme') + newTheme + ".",
       })
 
-      return { 
-        success: true, 
+      return {
+        success: true,
         theme: newTheme,
         message: t('tools.switchTheme') + newTheme + "."
       };
     } catch (error) {
-      return { 
-        success: false, 
-        message: t('tools.themeFailed') + ": " + error 
+      return {
+        success: false,
+        message: t('tools.themeFailed') + ": " + error
       };
     }
   }
@@ -49,7 +62,7 @@ export const useToolsFunctions = () => {
     try {
       const duration = 5 * 1000
       const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1", "#3b82f6", "#14b8a6", "#f97316", "#10b981", "#facc15"]
-      
+
       const confettiConfig = {
         particleCount: 30,
         spread: 100,
@@ -69,15 +82,15 @@ export const useToolsFunctions = () => {
       const animate = () => {
         const now = Date.now()
         const end = now + duration
-        
+
         const elements = document.querySelectorAll('div, p, button, h1, h2, h3')
         elements.forEach((element) => {
-          framerAnimate(element, 
-            { 
+          framerAnimate(element,
+            {
               scale: [1, 1.1, 1],
               rotate: [0, 5, -5, 0],
-            }, 
-            { 
+            },
+            {
               duration: 0.5,
               repeat: 10,
               ease: "easeInOut"
@@ -96,14 +109,14 @@ export const useToolsFunctions = () => {
         if (mainElement) {
           mainElement.classList.remove('bg-gradient-to-b', 'from-gray-50', 'to-white')
           const originalBg = mainElement.style.backgroundColor
-          
+
           const changeColor = () => {
             const now = Date.now()
             const end = now + duration
-            
+
             const colorCycle = () => {
               if (Date.now() > end) {
-                framerAnimate(mainElement, 
+                framerAnimate(mainElement,
                   { backgroundColor: originalBg },
                   { duration: 0.5 }
                 )
@@ -116,13 +129,13 @@ export const useToolsFunctions = () => {
               )
               setTimeout(colorCycle, 200)
             }
-            
+
             colorCycle()
           }
-          
+
           changeColor()
         }
-        
+
         frame()
       }
 
@@ -176,7 +189,7 @@ export const useToolsFunctions = () => {
       toast.success(t('tools.scrapeWebsite.toast') + " 📋", {
         description: t('tools.scrapeWebsite.success'),
       })
-    
+
       return {
         success: true,
         message: "Here is the scraped website content: " + JSON.stringify(scrapeResult.markdown) + "Summarize and explain it to the user now in a response."
@@ -191,6 +204,7 @@ export const useToolsFunctions = () => {
   }
 
   return {
+    searchKnowledgeBase,
     timeFunction,
     backgroundFunction,
     partyFunction,

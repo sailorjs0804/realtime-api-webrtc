@@ -73,6 +73,10 @@ export const en = {
             scrapeWebsite: {
                 name: "Website Scraper",
                 description: 'Say "Scrape [website URL]" to extract content from a webpage.'
+            },
+            searchKnowledgeBase: {
+                name: "Knowledge Base Search",
+                description: 'Ask questions about uploaded documents, and the system will search for relevant information from the knowledge base.'
             }
         },
         clipboard: {
