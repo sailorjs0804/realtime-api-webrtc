@@ -21,8 +21,8 @@ export function KnowledgeBaseSection() {
             const formData = new FormData();
             formData.append('files', file);
 
-            // 直接调用后端 8000 端口
-            const response = await fetch('http://localhost:8000/api/v1/upload', {
+            // 使用 Next.js API 路由，避免 CORS 问题
+            const response = await fetch('/api/v1/upload', {
                 method: 'POST',
                 body: formData,
             });
