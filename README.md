@@ -24,6 +24,7 @@ cd realtime-api-webrtc
 ### 2. Environment Setup
 Create a `.env` file in the root directory:
 ```env
+NEXT_PUBLIC_API_BASE_URL==your-next-api-url
 AZURE_OPENAI_API_KEY=your-openai-api-key
 AZURE_API_VERSION="2024-10-01-preview"
 AZURE_OPENAI_ENDPOINT=your-azure-openai-endpoint
