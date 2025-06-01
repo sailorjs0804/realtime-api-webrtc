@@ -5,8 +5,8 @@ const ALLOWED_EXTENSIONS = ['.pdf', '.txt', '.docx', '.md'];
 // Maximum file size in bytes (10MB)
 const MAX_SIZE = 10 * 1024 * 1024;
 // External API endpoint
-const EXTERNAL_API_URL = 'https://tianhuiai.com.cn/api/v1/upload';
-// const EXTERNAL_API_URL = 'http://localhost:8000/api/v1/upload';
+// const EXTERNAL_API_URL = 'https://tianhuiai.com.cn/api/v1/upload';
+const EXTERNAL_API_URL = 'http://localhost:8000/api/v1/upload';
 
 export async function POST(request: NextRequest) {
   try {
