@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { apiConfig } from '@/config/api';
 
 // Allowed file extensions
 const ALLOWED_EXTENSIONS = ['.pdf', '.txt', '.docx', '.md'];
 // Maximum file size in bytes (10MB)
 const MAX_SIZE = 10 * 1024 * 1024;
-// External API endpoint
-// const EXTERNAL_API_URL = 'https://tianhuiai.com.cn/api/v1/upload';
-const EXTERNAL_API_URL = 'http://localhost:8000/api/v1/upload';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +12,7 @@ export async function POST(request: NextRequest) {
 
     // Check if the request is a multipart form
     const contentType = request.headers.get('content-type') || '';
-    console.log('Content-Type:', contentType);
+    // console.log('Content-Type:', contentType);
 
     if (!contentType.includes('multipart/form-data')) {
       return NextResponse.json(
@@ -25,9 +23,9 @@ export async function POST(request: NextRequest) {
 
     // Parse the form data
     const formData = await request.formData();
-    console.log('Form data keys:', [...formData.keys()]);
+    // console.log('Form data keys:', [...formData.keys()]);
 
-    const file = formData.get('file') as File | null;
+    const file = formData.get('files') as File | null;
     console.log('File received:', file ? `${file.name} (${file.size} bytes)` : 'No file');
 
     // Validate file exists
@@ -62,11 +60,12 @@ export async function POST(request: NextRequest) {
     // This is the key - FastAPI expects 'files' with no brackets
     apiFormData.append('files', file);
 
-    console.log(`Sending file to ${EXTERNAL_API_URL}: ${fileName}, size: ${file.size} bytes`);
-    console.log('API form data keys:', [...apiFormData.keys()]);
+    const uploadUrl = apiConfig.getUrl('upload');
+    // console.log(`Sending file to ${uploadUrl}: ${fileName}, size: ${file.size} bytes`);
+    // console.log('API form data keys:', [...apiFormData.keys()]);
 
     // Forward the request to the external API with proper headers for a multipart form
-    const apiResponse = await fetch(EXTERNAL_API_URL, {
+    const apiResponse = await fetch(uploadUrl, {
       method: 'POST',
       body: apiFormData,
     }).catch(() => {
@@ -106,7 +105,7 @@ export async function POST(request: NextRequest) {
     let responseData;
     try {
       responseData = await apiResponse.json();
-      console.log('API Response data:', responseData);
+      // console.log('API Response data:', responseData);
     } catch (error) {
       console.warn('Could not parse JSON from API response:', error);
       responseData = { message: 'File processed successfully, but response format was unexpected' };
