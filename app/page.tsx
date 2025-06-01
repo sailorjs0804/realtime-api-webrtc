@@ -37,15 +37,17 @@ const App: React.FC = () => {
     // Register all functions by iterating over the object
     Object.entries(toolsFunctions).forEach(([name, func]) => {
       const functionNames: Record<string, string> = {
+        searchKnowledgeBaseFunction: 'searchKnowledgeBase',
         timeFunction: 'getCurrentTime',
-        backgroundFunction: 'changeBackgroundColor',
-        partyFunction: 'partyMode',
-        launchWebsite: 'launchWebsite',
-        copyToClipboard: 'copyToClipboard',
-        scrapeWebsite: 'scrapeWebsite'
+        // backgroundFunction: 'changeBackgroundColor',
+        // partyFunction: 'partyMode',
+        // launchWebsite: 'launchWebsite',
+        // copyToClipboard: 'copyToClipboard',
+        // scrapeWebsite: 'scrapeWebsite'
       };
 
-      registerFunction(functionNames[name], func);
+      const toolName = functionNames[name];
+      registerFunction(toolName, func);
     });
   }, [registerFunction, toolsFunctions])
 
