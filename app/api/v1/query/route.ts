@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       try {
         const errorData = await apiResponse.json();
         errorMessage = errorData.error || errorData.message || errorData.msg || errorMessage;
-      } catch (e) {
+      } catch {
         // If JSON parsing fails, try to get text
         try {
           const textError = await apiResponse.text();
