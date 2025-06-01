@@ -5,7 +5,7 @@ This is a WebRTC-based Voice AI stream application using `OpenAI`'s `Realtime AP
 - **Next.js Framework**: Built with Next.js for server-side rendering and API routes.
 - **Modern UI**: Animated using Tailwind CSS & Framer Motion & shadcn/ui.
 - **Use-WebRTC Hook**: A hook to abstract the OpenAI WebRTC handling.
-- **Tool Calling**: 6 example functions to demonstrate client side tools along with Realtime API: `getCurrentTime`, `partyMode`, `changeBackground`, `launchWebsite`, `copyToClipboard`, `scrapeWebsite` (requires FireCrawl API key)
+- **Tool Calling**: KnowledgeBase search.
 - **Localization**: Select language for app strings and the voice agent (English, Chinese)
 
   
