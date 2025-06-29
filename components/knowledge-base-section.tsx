@@ -3,6 +3,7 @@
 import React, {useState} from "react"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {KnowledgeUpload} from "@/components/knowledge-upload"
+import {UploadProgress} from "@/components/upload-progress"
 import {motion} from "framer-motion"
 import {toast} from "sonner"
 import {Book} from "lucide-react"
@@ -15,11 +16,20 @@ interface UploadedFile {
 
 export function KnowledgeBaseSection() {
     const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+    const [currentKbId, setCurrentKbId] = useState<string | null>(null);
+    const [isProcessing, setIsProcessing] = useState(false);
 
-    const handleUpload = async (file: File) => {
+    const handleUpload = async (files: File[]) => {
         try {
+            setIsProcessing(true);
+            setCurrentKbId(null);
+
             const formData = new FormData();
-            formData.append('files', file);
+
+            // 添加所有文件到 FormData
+            files.forEach(file => {
+                formData.append('files', file);
+            });
 
             // 使用 Next.js API 路由，避免 CORS 问题
             const response = await fetch('/api/v1/upload', {
@@ -38,22 +48,39 @@ export function KnowledgeBaseSection() {
             if (result.kb_id) {
                 localStorage.setItem('kb_id', result.kb_id);
                 console.log('Saved kb_id to localStorage:', result.kb_id);
+
+                // 设置当前 kb_id 以启动进度跟踪
+                setCurrentKbId(result.kb_id);
             }
 
-            // Add the new file to the uploaded files list
-            const newFile: UploadedFile = {
-                name: file.name,
-                timestamp: new Date().toISOString(),
-                id: result.data?.id || result.kb_id || undefined
-            };
-
-            setUploadedFiles(prev => [...prev, newFile]);
-            toast.success('知识库更新成功');
+            toast.success(`${files.length} 个文件上传成功，正在后台处理...`);
         } catch (error) {
             console.error('Upload error:', error);
             toast.error(error instanceof Error ? error.message : '上传失败');
-            throw error; // Re-throw to be handled by the KnowledgeUpload component
+            setIsProcessing(false);
+            throw error;
         }
+    };
+
+    const handleProcessingComplete = () => {
+        setIsProcessing(false);
+        setCurrentKbId(null);
+
+        // 添加文件到已上传列表
+        const newFile: UploadedFile = {
+            name: "处理完成的文件",
+            timestamp: new Date().toISOString(),
+            id: currentKbId || undefined
+        };
+
+        setUploadedFiles(prev => [...prev, newFile]);
+        toast.success('知识库更新成功！');
+    };
+
+    const handleProcessingError = (error: string) => {
+        setIsProcessing(false);
+        setCurrentKbId(null);
+        toast.error(`处理失败: ${error}`);
     };
 
     return (
@@ -74,7 +101,19 @@ export function KnowledgeBaseSection() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <KnowledgeUpload onUpload={handleUpload}/>
+                    <KnowledgeUpload onUpload={handleUpload} disabled={isProcessing}/>
+
+                    {/* 显示实时进度 */}
+                    {currentKbId && isProcessing && (
+                        <div className="mt-4">
+                            <UploadProgress
+                                kbId={currentKbId}
+                                onComplete={handleProcessingComplete}
+                                onError={handleProcessingError}
+                                pollingInterval={5000}
+                            />
+                        </div>
+                    )}
 
                     {uploadedFiles.length > 0 && (
                         <div className="mt-4 p-3 bg-muted rounded-md">

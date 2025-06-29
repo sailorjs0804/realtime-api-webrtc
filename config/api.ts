@@ -10,6 +10,7 @@ interface ApiConfig {
   endpoints: {
     upload: string;
     query: string;
+    progress: string;
   };
   getUrl: (endpoint: keyof ApiConfig['endpoints']) => string;
 }
@@ -23,6 +24,7 @@ export const apiConfig: ApiConfig = {
   endpoints: {
     upload: `${API_BASE_URL}/upload`,
     query: `${API_BASE_URL}/query`,
+    progress: `${API_BASE_URL}/progress`,
   },
 
   // 获取完整的 API URL

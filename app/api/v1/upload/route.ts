@@ -25,43 +25,48 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     // console.log('Form data keys:', [...formData.keys()]);
 
-    const file = formData.get('files') as File | null;
-    console.log('File received:', file ? `${file.name} (${file.size} bytes)` : 'No file');
+    const files = formData.getAll('files') as File[];
+    console.log(`Received ${files.length} files:`, files.map(f => `${f.name} (${f.size} bytes)`));
 
-    // Validate file exists
-    if (!file) {
+    // Validate files exist
+    if (!files || files.length === 0) {
       return NextResponse.json(
-        { error: 'No file provided' },
+        { error: 'No files provided' },
         { status: 400 }
       );
     }
 
-    // Validate file size
-    if (file.size > MAX_SIZE) {
-      return NextResponse.json(
-        { error: `File size exceeds the ${MAX_SIZE / (1024 * 1024)}MB limit` },
-        { status: 400 }
-      );
-    }
+    // Validate each file
+    for (const file of files) {
+      // Validate file size
+      if (file.size > MAX_SIZE) {
+        return NextResponse.json(
+          { error: `File ${file.name} exceeds the ${MAX_SIZE / (1024 * 1024)}MB limit` },
+          { status: 400 }
+        );
+      }
 
-    // Validate file extension
-    const fileName = file.name.toLowerCase();
-    const fileExtension = '.' + fileName.split('.').pop();
-    if (!ALLOWED_EXTENSIONS.includes(fileExtension)) {
-      return NextResponse.json(
-        { error: `File type not allowed. Supported types: ${ALLOWED_EXTENSIONS.join(', ')}` },
-        { status: 400 }
-      );
+      // Validate file extension
+      const fileName = file.name.toLowerCase();
+      const fileExtension = '.' + fileName.split('.').pop();
+      if (!ALLOWED_EXTENSIONS.includes(fileExtension)) {
+        return NextResponse.json(
+          { error: `File ${file.name} type not allowed. Supported types: ${ALLOWED_EXTENSIONS.join(', ')}` },
+          { status: 400 }
+        );
+      }
     }
 
     // Create a new FormData object to send to the external API
     const apiFormData = new FormData();
 
-    // This is the key - FastAPI expects 'files' with no brackets
-    apiFormData.append('files', file);
+    // Add all files to FormData
+    files.forEach(file => {
+      apiFormData.append('files', file);
+    });
 
     const uploadUrl = apiConfig.getUrl('upload');
-    // console.log(`Sending file to ${uploadUrl}: ${fileName}, size: ${file.size} bytes`);
+    // console.log(`Sending ${files.length} files to ${uploadUrl}`);
     // console.log('API form data keys:', [...apiFormData.keys()]);
 
     // Forward the request to the external API with proper headers for a multipart form
@@ -108,10 +113,10 @@ export async function POST(request: NextRequest) {
       // console.log('API Response data:', responseData);
     } catch (error) {
       console.warn('Could not parse JSON from API response:', error);
-      responseData = { message: 'File processed successfully, but response format was unexpected' };
+      responseData = { message: 'Files processed successfully, but response format was unexpected' };
     }
 
-    console.log('File successfully processed by external API');
+    console.log(`${files.length} files successfully processed by external API`);
 
     // Return the response from the external API
     const response = NextResponse.json(responseData);
